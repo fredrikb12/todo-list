@@ -8,7 +8,7 @@ const ToDoFactory = (title, description, dueDate, priority, notes) => {
     const setNotes = (input) => this.notes = input;
     const getComplete = () => {
         if (this.hasOwnProperty("complete")) {
-            return complete;
+            return this.complete;
         } else {
             console.log("Complete property not set.");
             return;
@@ -21,9 +21,20 @@ const ToDoFactory = (title, description, dueDate, priority, notes) => {
             this.complete = true;
         }
     }
+    const getProject = () => {
+        if(this.hasOwnProperty("project")) {
+            return this.project;
+        } else {
+            console.log("project property not set.");
+            return;
+        }
+    }
+    const setProject = (input) => {
+        this.project = input;
+    }
 
 
-    return { getTitle, getDescription, getDueDate, getPriority, getNotes, setNotes, setPriority, getComplete, setComplete };
+    return { getTitle, getDescription, getDueDate, getPriority, getNotes, setNotes, setPriority, getComplete, setComplete, getProject, setProject };
 }
 
 export default ToDoFactory;
