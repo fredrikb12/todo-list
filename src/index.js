@@ -1,3 +1,3 @@
-import { createHeaderElement } from "./webpage";
+import { createInitialWebpage } from "./webpage";
 
-document.getElementById("content").appendChild(createHeaderElement());
+createInitialWebpage();
