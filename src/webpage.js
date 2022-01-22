@@ -59,6 +59,17 @@ function createMainElement() {
     return main;
 }
 
+function createModal() {
+    const modal = createHTMLElement("div", "itemModal", "itemModal");
+    const modalLeft = createHTMLElement("div", "item-modal-left", "item-modal-left");
+    const modalRight = createHTMLElement("div", "item-modal-right", "item-modal-right");
+    
+
+
+    appendChildHelper(modal, [modalLeft, modalRight]);
+    return modal;
+}
+
 function createHTMLElement(element, classes, id) {
     const returnElement = document.createElement(element);
     if (typeof classes === "object") {
@@ -68,7 +79,7 @@ function createHTMLElement(element, classes, id) {
     } else if (typeof classes === "string" && classes !== "") {
         returnElement.classList.add(classes);
     }
-    if (typeof id === "string") {
+    if (typeof id === "string" && id !== "") {
         returnElement.setAttribute("id", id);
     }
     return returnElement;
