@@ -1,2 +1,0 @@
-import ToDoFactory from "./todoFactory";
-

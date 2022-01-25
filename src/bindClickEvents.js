@@ -1,24 +1,68 @@
+import { appendChildHelper } from "./domHelpers";
+import { createNewTaskButton, newTaskClick } from "./newTask";
+import { addTodo, getTodos, createTodos } from "./todoItems";
+import ToDoFactory from "./todoFactory";
+
 function bindClickEvents() {
-    const [newItemButton, projectsButton, importantButton] = findButtons(["header-add-button", "projects-button", "important-button"]);
+    const [projectsButton, importantButton] = findButtons(["projects-button", "important-button"]);
     const darkModeCheckbox = document.getElementById("dark-mode-checkbox");
+    const addTaskButton = document.getElementById("todo-add-container");
 
-    newItemButton.addEventListener("click", () => {
-        //show some modal form for adding a new todo
+    addProjectsButtonEvent(projectsButton);
+    addImportantButtonEvent(importantButton);
+    addAddTaskButtonEvent(addTaskButton);
+
+    darkModeCheckbox.addEventListener("click", () => {
+        //change color scheme somehow
     });
+}
 
+function addAddTaskButtonEvent(addTaskButton) {
+    addTaskButton.addEventListener("click", (e) => {
+        newTaskClick(e);
+    });
+}
+
+function addProjectsButtonEvent(projectsButton) {
     projectsButton.addEventListener("click", (e) => {
         e.stopPropagation();
         projectsButton.nextElementSibling.classList.toggle("sidebar-hidden");
     });
+}
 
+function addImportantButtonEvent(importantButton) {
     importantButton.addEventListener("click", (e) => {
         e.stopPropagation();
         importantButton.nextElementSibling.classList.toggle("sidebar-hidden");
     });
+}
 
-    darkModeCheckbox.addEventListener("click", () => {
-        //change color scheme somehow
-    })
+function addCloseButtonEvent(closeButton) {
+    closeButton.addEventListener("click", (e) => {
+        const parent = closeButton.parentNode;
+        parent.remove();
+        reAppendNewTaskButton();
+    });
+}
+
+function addConfirmButtonEvent(confirmButton) {
+    confirmButton.addEventListener("click", (e) => {
+        const parent = confirmButton.parentNode;
+        const title = parent.querySelector(".title-textarea").value;
+        const description = parent.querySelector(".description-textarea").value;
+        const newTodo = ToDoFactory(title, description, "", "", "");
+        console.log(newTodo.getTitle());
+        addTodo(newTodo);
+        parent.remove();
+        reAppendNewTaskButton();
+
+    });
+}
+
+function reAppendNewTaskButton() {
+    const newTaskButton = createNewTaskButton();
+    addAddTaskButtonEvent(newTaskButton);
+    appendChildHelper(document.getElementById("center-content"), newTaskButton);
 }
 
 function findButtons(buttonIDs) {
@@ -33,11 +77,11 @@ function findButtons(buttonIDs) {
             });
         });
     } else {
-        domButtons.find(function(button) {
+        domButtons.find(function (button) {
             return button.id === buttonIDs;
         });
     }
     return returnButtons;
 }
 
-export default bindClickEvents;
+export { bindClickEvents, addConfirmButtonEvent, addCloseButtonEvent };
