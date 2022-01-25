@@ -1,7 +1,6 @@
 import { appendChildHelper } from "./domHelpers";
 import { createNewTaskButton, newTaskClick } from "./newTask";
-import { addTodo, getTodos, createTodos } from "./todoItems";
-import ToDoFactory from "./todoFactory";
+import { addTodo, displayTodoDetails } from "./todoItems";
 
 function bindClickEvents() {
     const [projectsButton, importantButton] = findButtons(["projects-button", "important-button"]);
@@ -48,13 +47,33 @@ function addCloseButtonEvent(closeButton) {
 function addConfirmButtonEvent(confirmButton) {
     confirmButton.addEventListener("click", (e) => {
         const parent = confirmButton.parentNode;
-        const title = parent.querySelector(".title-textarea").value;
+        const title = parent.querySelector(".title-textarea");
+        if(title.value === "") {
+            title.placeholder = "This field cannot be empty.";
+            title.classList.add("red-text");
+            setTimeout(() => {
+                title.classList.remove("red-text");
+            }, 750);
+            return;
+        }
         const description = parent.querySelector(".description-textarea").value;
-        const newTodo = ToDoFactory(title, description, "", "", "");
-        console.log(newTodo.getTitle());
-        addTodo(newTodo);
+        const dueDate = parent.querySelector(".date-container .due-date-picker").valueAsDate;
+        const date = `${dueDate.getDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
+        const priority = parent.querySelector(".priority-slider").value;
+        addTodo(title.value, description, date, priority);
         parent.remove();
         reAppendNewTaskButton();
+    });
+}
+
+function addDetailedConfirmButtonEvent(confirmButton) {
+    confirmButton.addEventListener("click", (e) => {
+
+    });
+}
+
+function addDetailedCloseButtonEvent(closeButton) {
+    closeButton.addEventListener("click", (e) => {
 
     });
 }
@@ -63,6 +82,12 @@ function reAppendNewTaskButton() {
     const newTaskButton = createNewTaskButton();
     addAddTaskButtonEvent(newTaskButton);
     appendChildHelper(document.getElementById("center-content"), newTaskButton);
+}
+
+function addTodoEvent(todo) {
+    todo.addEventListener("click", (e) => {
+        displayTodoDetails(e.currentTarget.id);
+    });
 }
 
 function findButtons(buttonIDs) {
@@ -84,4 +109,4 @@ function findButtons(buttonIDs) {
     return returnButtons;
 }
 
-export { bindClickEvents, addConfirmButtonEvent, addCloseButtonEvent };
+export { bindClickEvents, addConfirmButtonEvent, addCloseButtonEvent, addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent };

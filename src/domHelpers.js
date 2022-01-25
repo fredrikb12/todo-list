@@ -24,4 +24,10 @@ function appendChildHelper(element, children) {
     return element;
 }
 
-export { createHTMLElement, appendChildHelper };
+function removeAllChildren(element) {
+    while(element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
+export { createHTMLElement, appendChildHelper, removeAllChildren };

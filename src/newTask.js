@@ -9,20 +9,66 @@ function newTaskClick(e) {
     e.currentTarget.remove();
     const container = createHTMLElement("div", "new-todo-container", "new-todo-container");
     const newTodoForm = createHTMLElement("div", "new-todo-form", "new-todo-form");
-    const titleArea = createHTMLElement("textarea", ["title-textarea", "textarea"]);
-    titleArea.placeholder = "Title: Eat food";
-    const descriptionArea = createHTMLElement("textarea", ["description-textarea", "textarea"]);
-    descriptionArea.placeholder = "Details: Preferably before you starve."
-    descriptionArea.rows="6";
-    const confirmButton = createHTMLElement("img", "task-button", "confirm-button");
-    confirmButton.src = confirmIcon;
+    const titleArea = createTitleArea();
+    const descriptionArea = createDescriptionArea();
+    const dateContainer = createDateContainer();
+    const confirmButton = createConfirmButton();
     addConfirmButtonEvent(confirmButton);
-    const closeButton = createHTMLElement("img", "task-button", "close-button");
-    closeButton.src = closeIcon;
+    confirmButton.setAttribute("id", "new-task-confirm");
+    const closeButton = createCloseButton();
+    closeButton.setAttribute("id", "new-task-close");
     addCloseButtonEvent(closeButton);
-    appendChildHelper(container, appendChildHelper(newTodoForm, [titleArea, descriptionArea]));
+    appendChildHelper(container, appendChildHelper(newTodoForm, [titleArea, descriptionArea, dateContainer]));
     appendChildHelper(container, [confirmButton, closeButton]);
     appendChildHelper(parent, container);
+}
+
+function createSlider() {
+    const sliderContainer = createHTMLElement("div", "slider-container");
+    const prioSlider = createHTMLElement("input", "priority-slider");
+    prioSlider.type = "range";
+    prioSlider.min = "1";
+    prioSlider.max = "10";
+    prioSlider.value = "5";
+    const prioText = createHTMLElement("p", "prio-text");
+    prioText.textContent = "Priority: ";
+    appendChildHelper(sliderContainer, [prioText, prioSlider]);
+    return sliderContainer;
+}
+
+function createConfirmButton() {
+    const confirmButton = createHTMLElement("img", ["task-button", "confirm-button"]);
+    confirmButton.src = confirmIcon;
+    return confirmButton;
+}
+
+function createCloseButton() {
+    const closeButton = createHTMLElement("img", ["task-button", "close-button"]);
+    closeButton.src = closeIcon;
+    return closeButton;
+}
+
+function createDateContainer() {
+    const dateContainer = createHTMLElement("div", "date-container");
+    const datePicker = createHTMLElement("input", "due-date-picker");
+    datePicker.type = "date";
+    datePicker.valueAsDate = new Date();
+
+    appendChildHelper(dateContainer, [datePicker, createSlider()]);
+    return dateContainer;
+}
+
+function createDescriptionArea() {
+    const descriptionArea = createHTMLElement("textarea", ["description-textarea", "textarea"]);
+    descriptionArea.placeholder = "Details: Preferably before you starve."
+    descriptionArea.rows = "5";
+    return descriptionArea;
+}
+
+function createTitleArea() {
+    const titleArea = createHTMLElement("textarea", ["title-textarea", "textarea"]);
+    titleArea.placeholder = "Title: Eat food";
+    return titleArea;
 }
 
 function createNewTaskButton() {
@@ -35,4 +81,4 @@ function createNewTaskButton() {
     return bottomContainer;
 }
 
-export { newTaskClick, createNewTaskButton };
+export { newTaskClick, createNewTaskButton, createSlider, createCloseButton, createConfirmButton, createDateContainer, createTitleArea, createDescriptionArea };

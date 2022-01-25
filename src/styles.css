@@ -262,6 +262,16 @@ input:checked + .slider:before {
     padding: 4px 8px;
 }
 
+.todo-title {
+    max-width: 400px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.todo-due-date {
+    font-size: 16px;
+}
+
 .todo-item:hover {
     color: white;
     cursor: pointer;
@@ -269,7 +279,8 @@ input:checked + .slider:before {
     border-bottom-color: #c5c6c7b0;
 }
 
-.new-todo-form {
+.new-todo-form,
+.todo-detailed {
     display: flex;
     flex-direction: column;
     border: 1px solid #c5c6c7;
@@ -287,6 +298,10 @@ input:checked + .slider:before {
     font-size: 18px;
 }
 
+.textarea::placeholder {
+    opacity: 1;
+}
+
 .task-button {
     opacity: 0.6;
     margin-top: 5px;
@@ -300,7 +315,33 @@ input:checked + .slider:before {
     cursor: pointer;
 }
 
+.red-text::placeholder {
+    color: #ec4141;
+}
 
+.due-date-picker {
+    width: 150px;
+    background-color: #131920;
+    color: white;
+    margin-top: 5px;
+}
+
+.due-date-picker::-webkit-calendar-picker-indicator {
+    filter: invert(93%) sepia(100%) saturate(28%) hue-rotate(223deg) brightness(105%) contrast(103%);
+}
+
+.date-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.prio-text {
+    color: #C5C6C7;
+    font-size: 18px;
+    text-align: center;
+}
 
 
 

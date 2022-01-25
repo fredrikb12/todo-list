@@ -1,11 +1,9 @@
-const ToDoFactory = (title, description, dueDate, priority, notes) => {
+const ToDoFactory = (title, description, dueDate, priority) => {
     const getTitle = () => title;
     const getDescription = () => description;
     const getDueDate = () => dueDate;
     const getPriority = () => priority;
     const setPriority = (input) => this.priority = input;
-    const getNotes = () => notes;
-    const setNotes = (input) => this.notes = input;
     const getComplete = () => {
         if (this.hasOwnProperty("complete")) {
             return this.complete;
@@ -34,7 +32,7 @@ const ToDoFactory = (title, description, dueDate, priority, notes) => {
     }
 
 
-    return { getTitle, getDescription, getDueDate, getPriority, getNotes, setNotes, setPriority, getComplete, setComplete, getProject, setProject };
+    return { getTitle, getDescription, getDueDate, getPriority, setPriority, getComplete, setComplete, getProject, setProject };
 }
 
 export default ToDoFactory;
