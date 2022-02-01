@@ -1,5 +1,6 @@
 import { appendChildHelper, createHTMLElement } from "./domHelpers";
 import { addConfirmButtonEvent, addCloseButtonEvent } from "./bindClickEvents";
+import { getProjects } from "./projects";
 import confirmIcon from "./images/confirm.svg";
 import closeIcon from "./images/close.svg";
 import addIcon from "./images/add.svg";
@@ -53,8 +54,18 @@ function createDateContainer() {
     const datePicker = createHTMLElement("input", "due-date-picker");
     datePicker.type = "date";
     datePicker.valueAsDate = new Date();
+    const projectContainer = createHTMLElement("div", "project-container");
+    const selector = createHTMLElement("select", "project-selector");
+    selector.name = "projects";
+    getProjects().forEach((project) => {
+        const newOption = createHTMLElement("option", "project-option");
+        newOption.value = project.title;
+        newOption.textContent = project.title;
+        appendChildHelper(selector, newOption);
+    });
 
-    appendChildHelper(dateContainer, [datePicker, createSlider()]);
+    appendChildHelper(projectContainer, selector);
+    appendChildHelper(dateContainer, [datePicker, projectContainer, createSlider()]);
     return dateContainer;
 }
 

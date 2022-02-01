@@ -2,6 +2,9 @@ import { bindClickEvents } from "./bindClickEvents";
 import { appendChildHelper, createHTMLElement } from "./domHelpers";
 import { getTodos, createTodos } from "./todoItems";
 import { createNewTaskButton } from "./newTask";
+import { addHomeProject } from "./projects";
+import { createNewAddButton } from "./addButton";
+import { createNewProjectButton } from "./newProject";
 
 function createHeaderElement() {
     const header = createHTMLElement("header", "header", "header");
@@ -32,9 +35,9 @@ function createMainElement() {
     const projectsButtonText = createHTMLElement("p", "projects-text", "projects-text");
     projectsButtonText.innerHTML = "<span id=\"projects-span\">> </span>Projects";
     appendChildHelper(projectsContainer, appendChildHelper(projectsButton, projectsButtonText));
-    const projectsFolder = createHTMLElement("div", ["projects-folder", "sidebar-hidden"], "projects-folder");
-
-    appendChildHelper(mainLeft, appendChildHelper(projectsContainer, projectsFolder));
+    const projectsContent = createHTMLElement("div", "projects-content", "projects-content");
+    const projects = createHTMLElement("div", ["projects"], "projects");
+    appendChildHelper(mainLeft, appendChildHelper(projectsContainer, appendChildHelper(projectsContent, [projects, createNewProjectButton()])));
 
     const importantContainer = createHTMLElement("div", "important-container", "important-container");
     const importantButton = createHTMLElement("button", "important-button", "important-button");
@@ -77,6 +80,7 @@ function createInitialWebpage() {
     const header = createHeaderElement();
     const main = createMainElement();
     appendChildHelper(contentDiv, [header, main]);
+    addHomeProject();
     createTodos(getTodos());
     bindClickEvents();
 }

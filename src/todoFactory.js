@@ -1,9 +1,14 @@
-const ToDoFactory = (title, description, dueDate, priority) => {
+const ToDoFactory = (title, description, dueDate, priority, project) => {
     const getTitle = () => title;
+    const setTitle = (input) => this.title = input;
     const getDescription = () => description;
+    const setDescription = (input) => this.description = input;
     const getDueDate = () => dueDate;
+    const setDueDate = (input) => this.dueDate = input;
     const getPriority = () => priority;
     const setPriority = (input) => this.priority = input;
+    const getProject = () => project;
+    const setProject = (input) => this.project = input;
     const getComplete = () => {
         if (this.hasOwnProperty("complete")) {
             return this.complete;
@@ -19,7 +24,7 @@ const ToDoFactory = (title, description, dueDate, priority) => {
             this.complete = true;
         }
     }
-    const getProject = () => {
+   /* const getProject = () => {
         if(this.hasOwnProperty("project")) {
             return this.project;
         } else {
@@ -29,10 +34,10 @@ const ToDoFactory = (title, description, dueDate, priority) => {
     }
     const setProject = (input) => {
         this.project = input;
-    }
+    }*/
 
 
-    return { getTitle, getDescription, getDueDate, getPriority, setPriority, getComplete, setComplete, getProject, setProject };
+    return { getTitle, setTitle, getDescription, setDescription, getDueDate, setDueDate, getPriority, setPriority, getComplete, setComplete, getProject, setProject };
 }
 
 export default ToDoFactory;

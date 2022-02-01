@@ -1,15 +1,18 @@
 import { appendChildHelper } from "./domHelpers";
+import { newProjectClick } from "./newProject";
 import { createNewTaskButton, newTaskClick } from "./newTask";
-import { addTodo, displayTodoDetails } from "./todoItems";
+import { addTodo, createTodos, displayTodoDetails, editTodo, getTodos, renderAllTodos } from "./todoItems";
 
 function bindClickEvents() {
     const [projectsButton, importantButton] = findButtons(["projects-button", "important-button"]);
     const darkModeCheckbox = document.getElementById("dark-mode-checkbox");
     const addTaskButton = document.getElementById("todo-add-container");
+    const addProjectButton = document.querySelector(".new-project-button");
 
     addProjectsButtonEvent(projectsButton);
     addImportantButtonEvent(importantButton);
     addAddTaskButtonEvent(addTaskButton);
+    addNewProjectButtonEvent(addProjectButton);
 
     darkModeCheckbox.addEventListener("click", () => {
         //change color scheme somehow
@@ -48,7 +51,7 @@ function addConfirmButtonEvent(confirmButton) {
     confirmButton.addEventListener("click", (e) => {
         const parent = confirmButton.parentNode;
         const title = parent.querySelector(".title-textarea");
-        if(title.value === "") {
+        if (title.value === "") {
             title.placeholder = "This field cannot be empty.";
             title.classList.add("red-text");
             setTimeout(() => {
@@ -60,21 +63,57 @@ function addConfirmButtonEvent(confirmButton) {
         const dueDate = parent.querySelector(".date-container .due-date-picker").valueAsDate;
         const date = `${dueDate.getDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
         const priority = parent.querySelector(".priority-slider").value;
-        addTodo(title.value, description, date, priority);
+        const project = parent.querySelector(".project-selector").value;
+        const todoID = addTodo(title.value, description, date, priority, project);
         parent.remove();
         reAppendNewTaskButton();
     });
 }
 
-function addDetailedConfirmButtonEvent(confirmButton) {
-    confirmButton.addEventListener("click", (e) => {
+function addNewProjectButtonEvent(button) {
+    button.addEventListener("click", (e) => {
+        newProjectClick(e);
+    });
+}
 
+function addConfirmNewProjectButtonEvent(confirmButton) {
+
+}
+
+function addCloseNewProjectButtonEvent(closeButton) {
+    closeButton.addEventListener("click", (e) => {
+        const parent = closeButton.parentNode;
+        parent.remove();
+        reAppendNewProjectButton();
+    });
+}
+
+function addDetailedConfirmButtonEvent(confirmButton, id) {
+    confirmButton.addEventListener("click", (e) => {
+        const parent = confirmButton.parentNode;
+        const title = parent.querySelector(".title-textarea");
+        if (title.value === "") {
+            title.placeholder = "This field cannot be empty.";
+            title.classList.add("red-text");
+            setTimeout(() => {
+                title.classList.remove("red-text");
+            }, 750);
+            return;
+        }
+        const description = parent.querySelector(".description-textarea").value;
+        const dueDate = parent.querySelector(".date-container .due-date-picker").valueAsDate;
+        const date = `${dueDate.getDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
+        const priority = parent.querySelector(".priority-slider").value;
+        const project = parent.querySelector(".project-selector").value;
+        editTodo(id, title.value, description, date, priority, project);
+        parent.remove();
+        renderAllTodos();
     });
 }
 
 function addDetailedCloseButtonEvent(closeButton) {
     closeButton.addEventListener("click", (e) => {
-
+        createTodos(getTodos());
     });
 }
 
@@ -109,4 +148,4 @@ function findButtons(buttonIDs) {
     return returnButtons;
 }
 
-export { bindClickEvents, addConfirmButtonEvent, addCloseButtonEvent, addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent };
+export { bindClickEvents, addConfirmButtonEvent, addCloseButtonEvent, addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent, addCloseNewProjectButtonEvent, addConfirmNewProjectButtonEvent };

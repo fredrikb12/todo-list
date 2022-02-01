@@ -1,23 +1,32 @@
 import ToDoFactory from "./todoFactory";
-import { appendChildHelper, createHTMLElement } from "./domHelpers";
+import { appendChildHelper, createHTMLElement, removeAllChildren } from "./domHelpers";
 import { addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent } from "./bindClickEvents";
-import { removeAllChildren } from "./domHelpers";
 import { createSlider, createCloseButton, createConfirmButton, createDateContainer, createTitleArea, createDescriptionArea } from "./newTask";
 
 const allTodos = [];
 
 function getTodos() {
     if (allTodos.length < 1) {
-        //addTodo("test", "stupid stuff", "16/3/1998", "high", "i don't know why there are notes");
+        //addTodo("test", "stupid stuff", "16/3/1998", "high");
     }
     return allTodos;
 }
 
-function addTodo(title, description, dueDate, priority) {
-    const todo = ToDoFactory(title, description, dueDate, priority);
+function getTodosByID(indexes) {
+    const todos = [];
+    indexes.forEach(index => {
+        todos.push(allTodos[index]);
+    });
+    return todos;
+}
+
+function addTodo(title, description, dueDate, priority, project) {
+    const todo = ToDoFactory(title, description, dueDate, priority, project);
+    todo.id = allTodos.length;
     allTodos.push(todo);
-    todo.id = allTodos.length - 1;
+
     createTodos(getTodos());
+    return todo.id;
 }
 
 function createTodos(todos) {
@@ -39,18 +48,25 @@ function createTodos(todos) {
     });
 }
 
+function editTodo(todoID, title, description, dueDate, priority, project) {
+    const newTodo = ToDoFactory(title, description, dueDate, priority, project);
+    newTodo.id = todoID;
+    allTodos.splice(todoID, 1, newTodo);
+    renderAllTodos();
+}
+
 function displayTodoDetails(todoID) {
     const todoNode = document.getElementById(todoID);
     const parent = todoNode.parentNode;
     const prevDetailedTodo = document.querySelector(".todo-detailed-container");
-    if(prevDetailedTodo !== null) {
+    if (prevDetailedTodo !== null) {
         createTodos(getTodos());
     }
     document.getElementById(todoID).remove();
 
 
 
-    
+
     const container = createHTMLElement("div", "todo-detailed-container");
     const todoForm = createHTMLElement("div", "todo-detailed");
     const titleArea = createTitleArea();
@@ -61,15 +77,18 @@ function displayTodoDetails(todoID) {
     dateContainer.querySelector(".priority-slider").value = getTodos()[todoID].getPriority();
     const confirmButton = createConfirmButton();
     confirmButton.setAttribute("id", "todo-detailed-confirm");
-    addDetailedConfirmButtonEvent(confirmButton);
+    addDetailedConfirmButtonEvent(confirmButton, todoID);
     const closeButton = createCloseButton();
     closeButton.setAttribute("id", "todo-detailed-close");
     addDetailedCloseButtonEvent(closeButton);
     appendChildHelper(container, appendChildHelper(todoForm, [titleArea, descriptionArea, dateContainer]));
     appendChildHelper(container, [confirmButton, closeButton]);
-    console.log(parent);
     appendChildHelper(parent, container);
 }
 
-export { addTodo, getTodos, createTodos, displayTodoDetails };
+function renderAllTodos() {
+    createTodos(getTodos());
+}
+
+export { addTodo, getTodos, createTodos, editTodo, displayTodoDetails, renderAllTodos };
 
