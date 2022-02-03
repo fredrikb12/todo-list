@@ -37,12 +37,14 @@ function addItemToProject(todoID, projectIndex) {
 }
 
 function deleteItemFromProject(todoID) {
-    projects.forEach(project => {
-        if (project.items.includes(todoID)) {
+    let projectTitle;
+    getProjects().forEach(project => {
+        if (project.items.includes(+todoID)) {
             project.items.splice(todoID, 1, "");
+            projectTitle = project.title;
         }
     });
-    createTodos(getTodosByID(getIDsOfProject(currentProject)));
+    createTodos(getTodosByID(getIDsOfProject(getProjectIndexByTitle(projectTitle))));
 }
 
 function getIDsOfProject(projectIndex) {

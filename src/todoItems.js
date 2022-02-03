@@ -39,7 +39,7 @@ function createTodos(todos) {
     const todosContainer = document.getElementById("todos");
     removeAllChildren(todosContainer);
     todos.forEach(todo => {
-        if (todo === null) return;
+        if (!todo) return;
         const item = createHTMLElement("div", "todo-item", todo.id.toString());
         const leftContainer = createHTMLElement("div", "todo-item-left");
         const rightContainer = createHTMLElement("div", "todo-item-right");
@@ -97,6 +97,7 @@ function displayTodoDetails(todoID) {
 function deleteTodo(todoID) {
     allTodos[todoID] = null;
     deleteItemFromProject(todoID);
+    renderImportantTodos();
 }
 
 function renderAllTodos() {
@@ -106,6 +107,7 @@ function renderAllTodos() {
 function renderImportantTodos() {
     const importantTodos = [];
     getTodos().forEach(todo => {
+        if(todo === null) return;
         if (todo.getPriority() >= 8) {
             importantTodos.push({ title: todo.getTitle(), id: todo.id, priority: todo.getPriority() });
         }
@@ -120,11 +122,8 @@ function renderImportantTodos() {
             const projects = getProjects();
             let project;
             for (let i = projects.length - 1; i >= 0; i--) {
-                console.log(i);
                 if (projects[i].items.includes(todo.id)) {
-                    console.log("inside if statement");
                     project = projects[i];
-                    console.dir(project);
                     break;
                 }
             }
