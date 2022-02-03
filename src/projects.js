@@ -5,6 +5,9 @@ const projects = [];
 const currentProject = 0;
 
 function addProject(title) {
+    for(let i = 0; i < projects.length; i++) {
+        if(projects[i].title === title) return;
+    }
     title = title.slice(0, 1).toUpperCase() + title.slice(1, title.length).toLowerCase();
     projects.push({
         title: title,
@@ -12,7 +15,6 @@ function addProject(title) {
     });
     projects[projects.length - 1].index = projects.length - 1;
     renderProjects();
-    console.dir(projects);
 }
 
 function addHomeProject() {
@@ -30,10 +32,9 @@ function addItemToProject(todoID, projectIndex) {
         }
     });
     projects[projectIndex].items.push(todoID);
-    if(projectIndex > 0) {
+    if (projectIndex > 0) {
         projects[0].items.push(todoID);
     }
-    console.log(projects[projectIndex]);
 }
 
 function deleteItemFromProject(todoID) {
@@ -54,13 +55,10 @@ function getProjects() {
 }
 
 function getProjectIndexByTitle(title) {
-    console.log("Getting project index");
-    console.log("Title is: " + title);
     for (let i = 0; i < projects.length; i++) {
         if (projects[i].title === title) {
-            console.log(i);
             return i;
-        } 
+        }
     }
     return 0;
 }
@@ -73,7 +71,11 @@ function renderProjects() {
         newProjectElement.textContent = project.title;
         newProjectElement.dataset.projectIndex = `${projects.findIndex(element => project === element)}`;
         newProjectElement.addEventListener("click", (e) => {
-        createTodos(getTodosByID(getIDsOfProject(newProjectElement.dataset.projectIndex)));
+            const titleNode = document.getElementById("todo-page-title");
+            const projectIndex = newProjectElement.dataset.projectIndex
+            titleNode.textContent = getProjects()[projectIndex].title;
+            createTodos(getTodosByID(getIDsOfProject(projectIndex)));
+            
         })
         appendChildHelper(container, newProjectElement);
     });

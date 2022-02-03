@@ -222,6 +222,7 @@ input:checked + .slider:before {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    padding-right: 35px;
 }
 
 .todo-top-container > p {
@@ -263,6 +264,23 @@ input:checked + .slider:before {
     border-bottom: 1px solid #c5c6c72f;
     padding: 4px 8px;
     margin-top: -1px;
+}
+
+.todo-item-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.delete-todo-button {
+    filter: invert(93%) sepia(100%) saturate(28%) hue-rotate(223deg) brightness(105%) contrast(103%);
+    opacity: 0.6;
+    width: 30px;
+    height: 30px;
+}
+
+.delete-todo-button:hover {
+    opacity: 0.9;
 }
 
 .todo-title {

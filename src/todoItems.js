@@ -1,8 +1,9 @@
 import ToDoFactory from "./todoFactory";
 import { appendChildHelper, createHTMLElement, removeAllChildren } from "./domHelpers";
-import { addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent } from "./bindClickEvents";
+import { addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent, addDeleteTodoEvent } from "./bindClickEvents";
 import { createSlider, createCloseButton, createConfirmButton, createDateContainer, createTitleArea, createDescriptionArea } from "./newTask";
 import { deleteItemFromProject } from "./projects";
+import deleteIcon from "./images/delete.svg";
 
 const allTodos = [];
 
@@ -31,10 +32,13 @@ function addTodo(title, description, dueDate, priority, project) {
 }
 
 function createTodos(todos) {
+    if(todos === []) {
+        return null;
+    }
     const todosContainer = document.getElementById("todos");
     removeAllChildren(todosContainer);
     todos.forEach(todo => {
-        if(todo === null) return;
+        if (todo === null) return;
         const item = createHTMLElement("div", "todo-item", todo.id.toString());
         const leftContainer = createHTMLElement("div", "todo-item-left");
         const rightContainer = createHTMLElement("div", "todo-item-right");
@@ -43,7 +47,10 @@ function createTodos(todos) {
         appendChildHelper(leftContainer, title);
         const dueDate = createHTMLElement("p", "todo-due-date");
         dueDate.textContent = todo.getDueDate();
-        appendChildHelper(rightContainer, dueDate);
+        const deleteButton = createHTMLElement("img", "delete-todo-button", "");
+        deleteButton.src = deleteIcon;
+        addDeleteTodoEvent(deleteButton);
+        appendChildHelper(rightContainer, [dueDate, deleteButton]);
         appendChildHelper(item, [leftContainer, rightContainer]);
         addTodoEvent(item);
         appendChildHelper(todosContainer, item);
@@ -73,7 +80,7 @@ function displayTodoDetails(todoID) {
     titleArea.value = getTodos()[todoID].getTitle();
     const descriptionArea = createDescriptionArea();
     descriptionArea.value = getTodos()[todoID].getDescription();
-    const dateContainer = createDateContainer();
+    const dateContainer = createDateContainer(false, todoID);
     dateContainer.querySelector(".priority-slider").value = getTodos()[todoID].getPriority();
     const confirmButton = createConfirmButton();
     confirmButton.setAttribute("id", "todo-detailed-confirm");
@@ -95,5 +102,5 @@ function renderAllTodos() {
     createTodos(getTodos());
 }
 
-export { addTodo, getTodos, createTodos, editTodo, displayTodoDetails, getTodosByID, renderAllTodos };
+export { addTodo, getTodos, createTodos, deleteTodo, editTodo, displayTodoDetails, getTodosByID, renderAllTodos };
 

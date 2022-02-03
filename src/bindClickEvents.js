@@ -2,7 +2,7 @@ import { appendChildHelper } from "./domHelpers";
 import { newProjectClick, reAppendNewProjectButton } from "./newProject";
 import { createNewTaskButton, newTaskClick } from "./newTask";
 import { addItemToProject, addProject, getProjectIndexByTitle } from "./projects";
-import { addTodo, createTodos, displayTodoDetails, editTodo, getTodos, renderAllTodos } from "./todoItems";
+import { addTodo, createTodos, deleteTodo, displayTodoDetails, editTodo, getTodos, renderAllTodos } from "./todoItems";
 
 function bindClickEvents() {
     const [projectsButton, importantButton] = findButtons(["projects-button", "important-button"]);
@@ -72,6 +72,16 @@ function addConfirmButtonEvent(confirmButton) {
     });
 }
 
+function addDeleteTodoEvent(deleteButton) {
+    deleteButton.addEventListener("click", (e) => {
+        //e.stopPropagation();
+        const parent = deleteButton.parentNode.parentNode;
+        const todoID = parent.getAttribute("id");
+        deleteTodo(todoID);
+        parent.remove();
+    })
+}
+
 function addNewProjectButtonEvent(button) {
     button.addEventListener("click", (e) => {
         newProjectClick(e);
@@ -136,6 +146,8 @@ function reAppendNewTaskButton() {
 
 function addTodoEvent(todo) {
     todo.addEventListener("click", (e) => {
+        if(e.target.classList.contains("delete-todo-button")) return;
+        if([...document.querySelectorAll(".delete-todo-button")].includes(e.target)) return;
         displayTodoDetails(e.currentTarget.id);
     });
 }
@@ -162,5 +174,5 @@ function findButtons(buttonIDs) {
 export {
     bindClickEvents, addConfirmButtonEvent, addCloseButtonEvent,
     addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent,
-    addCloseNewProjectButtonEvent, addConfirmNewProjectButtonEvent, addNewProjectButtonEvent
+    addCloseNewProjectButtonEvent, addConfirmNewProjectButtonEvent, addNewProjectButtonEvent, addDeleteTodoEvent,
 };

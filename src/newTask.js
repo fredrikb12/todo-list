@@ -4,15 +4,16 @@ import { getProjects } from "./projects";
 import confirmIcon from "./images/confirm.svg";
 import closeIcon from "./images/close.svg";
 import addIcon from "./images/add.svg";
+import { getTodosByID } from "./todoItems";
 
-function newTaskClick(e) {
+function newTaskClick(e, todoID) {
     const parent = e.currentTarget.parentNode;
     e.currentTarget.remove();
     const container = createHTMLElement("div", "new-todo-container", "new-todo-container");
     const newTodoForm = createHTMLElement("div", "new-todo-form", "new-todo-form");
     const titleArea = createTitleArea();
     const descriptionArea = createDescriptionArea();
-    const dateContainer = createDateContainer();
+    const dateContainer = createDateContainer(true, todoID);
     const confirmButton = createConfirmButton();
     addConfirmButtonEvent(confirmButton);
     confirmButton.setAttribute("id", "new-task-confirm");
@@ -49,7 +50,7 @@ function createCloseButton() {
     return closeButton;
 }
 
-function createDateContainer() {
+function createDateContainer(isNewTask, todoID) {
     const dateContainer = createHTMLElement("div", "date-container");
     const datePicker = createHTMLElement("input", "due-date-picker");
     datePicker.type = "date";
@@ -60,7 +61,17 @@ function createDateContainer() {
     getProjects().forEach((project) => {
         const newOption = createHTMLElement("option", "project-option");
         newOption.value = project.title;
-        newOption.textContent = project.title;
+        if (newOption.value === document.getElementById("todo-page-title").textContent && isNewTask) {
+            newOption.setAttribute("selected", "\"selected\"");
+        } else if (!isNewTask) {
+            //console.log(newOption.value);
+            //console.log(getTodosByID([todoID])[0].getProject().title);
+            console.log(getTodosByID([todoID])[0].getProject());
+            if(newOption.value === getTodosByID([todoID])[0].getProject()) {
+                newOption.setAttribute("selected", "\"selected\"");
+            }
+        }
+            newOption.textContent = project.title;
         appendChildHelper(selector, newOption);
     });
 
