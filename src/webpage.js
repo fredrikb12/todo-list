@@ -44,7 +44,7 @@ function createMainElement() {
     const importantButtonText = createHTMLElement("p", "important-text", "important-text");
     importantButtonText.innerHTML = "<span id=\"projects-span\">> </span> Important";
     appendChildHelper(importantContainer, appendChildHelper(importantButton, importantButtonText));
-    const importantFolder = createHTMLElement("div", ["important-folder", "sidebar-hidden"], "important-folder");
+    const importantFolder = createHTMLElement("div", ["important-folder"], "important-folder");
     appendChildHelper(mainLeft, appendChildHelper(importantContainer, importantFolder));
 
     const mainCenter = createHTMLElement("div", "main-center", "main-center");

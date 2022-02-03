@@ -2,7 +2,7 @@ import ToDoFactory from "./todoFactory";
 import { appendChildHelper, createHTMLElement, removeAllChildren } from "./domHelpers";
 import { addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent, addDeleteTodoEvent } from "./bindClickEvents";
 import { createSlider, createCloseButton, createConfirmButton, createDateContainer, createTitleArea, createDescriptionArea } from "./newTask";
-import { deleteItemFromProject } from "./projects";
+import { deleteItemFromProject, getProjectIndexByTitle, getProjects } from "./projects";
 import deleteIcon from "./images/delete.svg";
 
 const allTodos = [];
@@ -28,11 +28,12 @@ function addTodo(title, description, dueDate, priority, project) {
     allTodos.push(todo);
 
     createTodos(getTodos());
+    renderImportantTodos();
     return todo.id;
 }
 
 function createTodos(todos) {
-    if(todos === []) {
+    if (todos === []) {
         return null;
     }
     const todosContainer = document.getElementById("todos");
@@ -100,6 +101,38 @@ function deleteTodo(todoID) {
 
 function renderAllTodos() {
     createTodos(getTodos());
+}
+
+function renderImportantTodos() {
+    const importantTodos = [];
+    getTodos().forEach(todo => {
+        if (todo.getPriority() >= 8) {
+            importantTodos.push({ title: todo.getTitle(), id: todo.id, priority: todo.getPriority() });
+        }
+    });
+    const container = document.getElementById("important-folder");
+    removeAllChildren(container);
+    importantTodos.forEach(todo => {
+        const newImportantElement = createHTMLElement("p", "important-item");
+        newImportantElement.textContent = todo.title + `\xa0 \xa0 \xa0 (${todo.priority})`;
+        newImportantElement.dataset.todoID = todo.id;
+        newImportantElement.addEventListener("click", (e) => {
+            const projects = getProjects();
+            let project;
+            for (let i = projects.length - 1; i >= 0; i--) {
+                console.log(i);
+                if (projects[i].items.includes(todo.id)) {
+                    console.log("inside if statement");
+                    project = projects[i];
+                    console.dir(project);
+                    break;
+                }
+            }
+            document.getElementById("todo-page-title").textContent = project.title;
+            createTodos(getTodosByID(project.items));
+        });
+        appendChildHelper(container, newImportantElement);
+    });
 }
 
 export { addTodo, getTodos, createTodos, deleteTodo, editTodo, displayTodoDetails, getTodosByID, renderAllTodos };

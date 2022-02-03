@@ -167,12 +167,26 @@ input:checked + .slider:before {
     padding: 0 0 15px;
 }
 
-.projects-folder,
 .important-folder {
-    background-color: #3b3a31;
-    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
+.important-item {
+    color: #f1f1ff;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 4px;
+    width: 80%;
+}
+
+.important-item:hover {
+    color: #ffd4da;
+    cursor: pointer;
+}
 
 .projects-text,
 .important-text {

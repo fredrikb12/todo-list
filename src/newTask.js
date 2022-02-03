@@ -23,6 +23,7 @@ function newTaskClick(e, todoID) {
     appendChildHelper(container, appendChildHelper(newTodoForm, [titleArea, descriptionArea, dateContainer]));
     appendChildHelper(container, [confirmButton, closeButton]);
     appendChildHelper(parent, container);
+    titleArea.focus();
 }
 
 function createSlider() {
@@ -64,9 +65,6 @@ function createDateContainer(isNewTask, todoID) {
         if (newOption.value === document.getElementById("todo-page-title").textContent && isNewTask) {
             newOption.setAttribute("selected", "\"selected\"");
         } else if (!isNewTask) {
-            //console.log(newOption.value);
-            //console.log(getTodosByID([todoID])[0].getProject().title);
-            console.log(getTodosByID([todoID])[0].getProject());
             if(newOption.value === getTodosByID([todoID])[0].getProject()) {
                 newOption.setAttribute("selected", "\"selected\"");
             }

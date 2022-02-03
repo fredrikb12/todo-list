@@ -22,6 +22,7 @@ function newProjectClick(e) {
     appendChildHelper(container, appendChildHelper(newProjectForm, titleArea));
     appendChildHelper(container, appendChildHelper(buttonContainer, [confirmButton, closeButton]));
     appendChildHelper(parent, container);
+    titleArea.focus();
 }
 
 function createNewProjectButton() {

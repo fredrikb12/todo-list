@@ -5,10 +5,10 @@ const projects = [];
 const currentProject = 0;
 
 function addProject(title) {
+    title = title.slice(0, 1).toUpperCase() + title.slice(1, title.length).toLowerCase();
     for(let i = 0; i < projects.length; i++) {
         if(projects[i].title === title) return;
     }
-    title = title.slice(0, 1).toUpperCase() + title.slice(1, title.length).toLowerCase();
     projects.push({
         title: title,
         items: [],
@@ -22,7 +22,6 @@ function addHomeProject() {
 }
 
 function addItemToProject(todoID, projectIndex) {
-    console.log(`adding todo with id ${todoID} to project with index ${projectIndex}`);
     projects.forEach(project => {
         const foundIndex = project.items.findIndex(id => {
             return id == todoID;
@@ -76,7 +75,7 @@ function renderProjects() {
             titleNode.textContent = getProjects()[projectIndex].title;
             createTodos(getTodosByID(getIDsOfProject(projectIndex)));
             
-        })
+        });
         appendChildHelper(container, newProjectElement);
     });
 }
