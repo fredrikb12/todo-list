@@ -1,4 +1,4 @@
-import { appendChildHelper, createHTMLElement } from "./domHelpers";
+import { appendChildHelper, createHTMLElement, removeAllChildren } from "./domHelpers";
 
 const projects = [];
 
@@ -38,6 +38,7 @@ function getProjects() {
 
 function renderProjects() {
     const container = document.getElementById("projects");
+    removeAllChildren(container);
     projects.forEach(project => {
         const newProjectElement = createHTMLElement("p", "projects-item");
         newProjectElement.textContent = project.title;
@@ -46,4 +47,10 @@ function renderProjects() {
     });
 }
 
-export { addProject, addHomeProject, addItemToProject, getIDsOfProject, getProjects, renderProjects };
+function editProjectName(string, projectIndex) {
+    if (typeof string === "string") {
+        projects[projectIndex].title = string;
+    }
+}
+
+export { addProject, addHomeProject, addItemToProject, editProjectName, getIDsOfProject, getProjects, renderProjects };

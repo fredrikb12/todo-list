@@ -1,6 +1,7 @@
 import { appendChildHelper } from "./domHelpers";
-import { newProjectClick } from "./newProject";
+import { newProjectClick, reAppendNewProjectButton } from "./newProject";
 import { createNewTaskButton, newTaskClick } from "./newTask";
+import { addProject } from "./projects";
 import { addTodo, createTodos, displayTodoDetails, editTodo, getTodos, renderAllTodos } from "./todoItems";
 
 function bindClickEvents() {
@@ -77,14 +78,21 @@ function addNewProjectButtonEvent(button) {
 }
 
 function addConfirmNewProjectButtonEvent(confirmButton) {
-
+    confirmButton.addEventListener("click", (e) => {
+        const container = confirmButton.parentNode.parentNode;
+        const textarea = document.getElementById("new-project-input");
+        const title = textarea.value;
+        addProject(title);
+        container.remove();
+        reAppendNewProjectButton(document.getElementById("projects-content"));
+    });
 }
 
 function addCloseNewProjectButtonEvent(closeButton) {
     closeButton.addEventListener("click", (e) => {
-        const parent = closeButton.parentNode;
-        parent.remove();
-        reAppendNewProjectButton();
+        const container = closeButton.parentNode.parentNode;
+        container.remove();
+        reAppendNewProjectButton(document.getElementById("projects-content"));
     });
 }
 
@@ -148,4 +156,8 @@ function findButtons(buttonIDs) {
     return returnButtons;
 }
 
-export { bindClickEvents, addConfirmButtonEvent, addCloseButtonEvent, addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent, addCloseNewProjectButtonEvent, addConfirmNewProjectButtonEvent };
+export {
+    bindClickEvents, addConfirmButtonEvent, addCloseButtonEvent,
+    addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent,
+    addCloseNewProjectButtonEvent, addConfirmNewProjectButtonEvent, addNewProjectButtonEvent
+};
