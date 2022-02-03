@@ -175,7 +175,7 @@ input:checked + .slider:before {
 }
 
 .important-item {
-    color: #f1f1ff;
+    color: #ff6a50;
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -184,7 +184,7 @@ input:checked + .slider:before {
 }
 
 .important-item:hover {
-    color: #ffd4da;
+    color: #ff5233;
     cursor: pointer;
 }
 
