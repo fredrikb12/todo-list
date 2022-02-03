@@ -59,7 +59,7 @@ function createMainCenterContent() {
     const topContainer = createHTMLElement("div", "todo-top-container", "todo-top-container");
     const titleContainer = createHTMLElement("div", "project-title-container", "project-title-container");
     const title = createHTMLElement("h2", "todo-page-title", "todo-page-title");
-    title.textContent = "Temporary Title";
+    title.textContent = "Home";
     const dueDate = createHTMLElement("p", "", "todo-page-due-date");
     dueDate.textContent = "Due Date";
     appendChildHelper(content, appendChildHelper(topContainer, [title, dueDate]));

@@ -1,7 +1,7 @@
 import { appendChildHelper } from "./domHelpers";
 import { newProjectClick, reAppendNewProjectButton } from "./newProject";
 import { createNewTaskButton, newTaskClick } from "./newTask";
-import { addProject } from "./projects";
+import { addItemToProject, addProject, getProjectIndexByTitle } from "./projects";
 import { addTodo, createTodos, displayTodoDetails, editTodo, getTodos, renderAllTodos } from "./todoItems";
 
 function bindClickEvents() {
@@ -66,6 +66,7 @@ function addConfirmButtonEvent(confirmButton) {
         const priority = parent.querySelector(".priority-slider").value;
         const project = parent.querySelector(".project-selector").value;
         const todoID = addTodo(title.value, description, date, priority, project);
+        addItemToProject(todoID, getProjectIndexByTitle(project));
         parent.remove();
         reAppendNewTaskButton();
     });
@@ -113,9 +114,11 @@ function addDetailedConfirmButtonEvent(confirmButton, id) {
         const date = `${dueDate.getDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
         const priority = parent.querySelector(".priority-slider").value;
         const project = parent.querySelector(".project-selector").value;
-        editTodo(id, title.value, description, date, priority, project);
+        const editedTodoID = editTodo(id, title.value, description, date, priority, project);
         parent.remove();
         renderAllTodos();
+        const currentProjectIndex = getProjectIndexByTitle(project);
+        addItemToProject(editedTodoID, currentProjectIndex);
     });
 }
 

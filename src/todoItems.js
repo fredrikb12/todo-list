@@ -2,6 +2,7 @@ import ToDoFactory from "./todoFactory";
 import { appendChildHelper, createHTMLElement, removeAllChildren } from "./domHelpers";
 import { addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent } from "./bindClickEvents";
 import { createSlider, createCloseButton, createConfirmButton, createDateContainer, createTitleArea, createDescriptionArea } from "./newTask";
+import { deleteItemFromProject } from "./projects";
 
 const allTodos = [];
 
@@ -33,6 +34,7 @@ function createTodos(todos) {
     const todosContainer = document.getElementById("todos");
     removeAllChildren(todosContainer);
     todos.forEach(todo => {
+        if(todo === null) return;
         const item = createHTMLElement("div", "todo-item", todo.id.toString());
         const leftContainer = createHTMLElement("div", "todo-item-left");
         const rightContainer = createHTMLElement("div", "todo-item-right");
@@ -53,6 +55,7 @@ function editTodo(todoID, title, description, dueDate, priority, project) {
     newTodo.id = todoID;
     allTodos.splice(todoID, 1, newTodo);
     renderAllTodos();
+    return newTodo.id;
 }
 
 function displayTodoDetails(todoID) {
@@ -63,9 +66,6 @@ function displayTodoDetails(todoID) {
         createTodos(getTodos());
     }
     document.getElementById(todoID).remove();
-
-
-
 
     const container = createHTMLElement("div", "todo-detailed-container");
     const todoForm = createHTMLElement("div", "todo-detailed");
@@ -86,9 +86,14 @@ function displayTodoDetails(todoID) {
     appendChildHelper(parent, container);
 }
 
+function deleteTodo(todoID) {
+    allTodos[todoID] = null;
+    deleteItemFromProject(todoID);
+}
+
 function renderAllTodos() {
     createTodos(getTodos());
 }
 
-export { addTodo, getTodos, createTodos, editTodo, displayTodoDetails, renderAllTodos };
+export { addTodo, getTodos, createTodos, editTodo, displayTodoDetails, getTodosByID, renderAllTodos };
 
