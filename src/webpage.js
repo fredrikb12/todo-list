@@ -73,6 +73,10 @@ function createMainCenterContent() {
     return content;
 }
 
+function createFooter() {
+    const contentDiv = document.getElementById("content");
+}
+
 
 
 function createInitialWebpage() {

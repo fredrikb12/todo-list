@@ -83,6 +83,7 @@ function displayTodoDetails(todoID) {
     descriptionArea.value = getTodos()[todoID].getDescription();
     const dateContainer = createDateContainer(false, todoID);
     dateContainer.querySelector(".priority-slider").value = getTodos()[todoID].getPriority();
+    dateContainer.querySelector(".date-container .due-date-picker").value = getTodos()[todoID].getDueDate();
     const confirmButton = createConfirmButton();
     confirmButton.setAttribute("id", "todo-detailed-confirm");
     addDetailedConfirmButtonEvent(confirmButton, todoID);
@@ -117,7 +118,7 @@ function renderImportantTodos() {
     importantTodos.forEach(todo => {
         const newImportantElement = createHTMLElement("p", "important-item");
         newImportantElement.textContent = todo.title + `\xa0 \xa0 \xa0 (${todo.priority})`;
-        newImportantElement.dataset.todoID = todo.id;
+        newImportantElement.dataset.todoid = todo.id;
         newImportantElement.addEventListener("click", (e) => {
             const projects = getProjects();
             let project;
@@ -129,6 +130,7 @@ function renderImportantTodos() {
             }
             document.getElementById("todo-page-title").textContent = project.title;
             createTodos(getTodosByID(project.items));
+            displayTodoDetails(todo.id);
         });
         appendChildHelper(container, newImportantElement);
     });

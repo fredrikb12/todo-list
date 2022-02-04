@@ -61,8 +61,7 @@ function addConfirmButtonEvent(confirmButton) {
             return;
         }
         const description = parent.querySelector(".description-textarea").value;
-        const dueDate = parent.querySelector(".date-container .due-date-picker").valueAsDate;
-        const date = `${dueDate.getDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
+        const date = document.querySelector(".date-container .due-date-picker").value;
         const priority = parent.querySelector(".priority-slider").value;
         const project = parent.querySelector(".project-selector").value;
         const todoID = addTodo(title.value, description, date, priority, project);
@@ -120,8 +119,7 @@ function addDetailedConfirmButtonEvent(confirmButton, id) {
             return;
         }
         const description = parent.querySelector(".description-textarea").value;
-        const dueDate = parent.querySelector(".date-container .due-date-picker").valueAsDate;
-        const date = `${dueDate.getDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
+        const date = parent.querySelector(".date-container .due-date-picker").value;
         const priority = parent.querySelector(".priority-slider").value;
         const project = parent.querySelector(".project-selector").value;
         const editedTodoID = editTodo(id, title.value, description, date, priority, project);
