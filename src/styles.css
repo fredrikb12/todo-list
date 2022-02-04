@@ -435,5 +435,36 @@ input:checked + .slider:before {
     text-align: center;
 }
 
+.footer-container {
+    display: flex;
+    align-items: center;
+    color: #f1f1ffd2;
+    background-color: hsla(240, 17%, 16%, 0.719);
+    border-top: 1px solid #706b6b;
+    height: 70px;
+}
+
+#footer-left {
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
+    margin-right: 7px;
+}
+
+#footer-right {
+    display: flex;
+    justify-content: flex-start;
+    width: 50%;
+    margin-left: 7px;
+}
+
+.github-image {
+    filter: invert(93%) sepia(100%) saturate(28%) hue-rotate(223deg) brightness(105%) contrast(103%);
+    opacity: 0.6;
+}
+
+.github-image:hover {
+    opacity: 1;
+}
 
 

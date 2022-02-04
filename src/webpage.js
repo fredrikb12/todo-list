@@ -5,6 +5,7 @@ import { createNewTaskButton } from "./newTask";
 import { addHomeProject } from "./projects";
 import { createNewAddButton } from "./addButton";
 import { createNewProjectButton } from "./newProject";
+import githubIcon from "./images/github.svg";
 
 function createHeaderElement() {
     const header = createHTMLElement("header", "header", "header");
@@ -74,7 +75,21 @@ function createMainCenterContent() {
 }
 
 function createFooter() {
-    const contentDiv = document.getElementById("content");
+    const footer = createHTMLElement("footer", "footer-container");
+    const footerText = createHTMLElement("p", "footer-text");
+    footerText.textContent = `Fredrik B ${new Date().getFullYear()} ©`;
+    const footerLeft = createHTMLElement("div", "", "footer-left");
+    const footerRight = createHTMLElement("div", "", "footer-right");
+    const anchor = createHTMLElement("a", "github-anchor");
+    anchor.href = "https://github.com/fredrikb12";
+    const img = createHTMLElement("img", "github-image");
+    img.src = githubIcon;
+    appendChildHelper(anchor, img);
+    appendChildHelper(footerLeft, footerText);
+    appendChildHelper(footerRight, anchor);
+    appendChildHelper(footer, [footerLeft, footerRight]);
+    return footer;
+    
 }
 
 
@@ -83,7 +98,8 @@ function createInitialWebpage() {
     const contentDiv = document.getElementById("content");
     const header = createHeaderElement();
     const main = createMainElement();
-    appendChildHelper(contentDiv, [header, main]);
+    const footer = createFooter();
+    appendChildHelper(contentDiv, [header, main, footer]);
     addHomeProject();
     createTodos(getTodos());
     bindClickEvents();
