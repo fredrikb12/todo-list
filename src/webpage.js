@@ -1,8 +1,8 @@
-import { bindClickEvents } from "./bindClickEvents";
+import { addLightSwitchEvent, bindClickEvents } from "./bindClickEvents";
 import { appendChildHelper, createHTMLElement } from "./domHelpers";
-import { getTodos, createTodos } from "./todoItems";
+import { getTodos, createTodos, getLocalTodos } from "./todoItems";
 import { createNewTaskButton } from "./newTask";
-import { addHomeProject } from "./projects";
+import { addHomeProject, getLocalProjects } from "./projects";
 import { createNewAddButton } from "./addButton";
 import { createNewProjectButton } from "./newProject";
 import githubIcon from "./images/github.svg";
@@ -18,6 +18,7 @@ function createHeaderElement() {
     const input = createHTMLElement("input", "", "dark-mode-checkbox");
     input.type = "checkbox";
     input.checked = true;
+    addLightSwitchEvent(input);
     const span = createHTMLElement("span", ["slider", "round"]);
     const labelSymbol = createHTMLElement("p", "switch-text", "switch-text");
     labelSymbol.textContent = "💡";
@@ -89,7 +90,7 @@ function createFooter() {
     appendChildHelper(footerRight, anchor);
     appendChildHelper(footer, [footerLeft, footerRight]);
     return footer;
-    
+
 }
 
 
@@ -100,7 +101,22 @@ function createInitialWebpage() {
     const main = createMainElement();
     const footer = createFooter();
     appendChildHelper(contentDiv, [header, main, footer]);
-    addHomeProject();
+    if (typeof Storage !== "undefined" && localStorage.length > 0) {
+        console.log("getting local projects");
+        getLocalProjects();
+        getLocalTodos();
+        if(localStorage.prefersDarkMode == "false") {
+            document.body.classList.toggle("light-theme");
+            document.getElementById("dark-mode-checkbox").checked = false;
+        }
+    } else if (typeof Storage !== "undefined" && localStorage.length == 0) {
+        console.log("No stored projects, adding home project");
+        addHomeProject();
+        localStorage.prefersDarkMode = true;
+    } else {
+        console.log("No local storage available");
+        addHomeProject();
+    }
     createTodos(getTodos());
     bindClickEvents();
 }

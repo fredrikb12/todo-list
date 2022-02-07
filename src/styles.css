@@ -1,3 +1,14 @@
+:root {
+    --darkBlue: hsl(240, 41%, 7%);
+    --lightGreyBlue: #CECFED;
+    --dimOrange: #ff6a50;
+    --dimRed: #ff5233;
+    --lightPink: #ffd4da;
+    --dimWhite: #e5e6e7;
+    --mildBlueWhite: #f1f1ff;
+    --brightRed: #ec4141;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,7 +16,7 @@
 }
 
 body {
-    background-color: #2B2D44;
+    background-color: var(--bgColor);
     height: 100vh;
 }
 
@@ -13,13 +24,52 @@ body {
     height: 100%;
 }
 
+.dark-theme {
+    --headerBg: var(--darkBlue);
+    --headerText: var(--lightGreyBlue);
+    --headerBorder: #FFFFFF;
+    --sidebarBg: var(--darkBlue);
+    --importantButtonHover: #ff8670;
+    --importantText: var(--dimOrange);
+    --importantTextHover: var(--dimRed);
+    --folderHover: var(--lightPink);
+    --todoText: var(--dimWhite);
+    --todoTextHover: none;
+    --todoBorder: #c5c6c72f;
+    --bgColor: #2b2d44;
+    --footerText: #f1f1ffd2;
+    --projectText: var(--mildBlueWhite);
+    --projectHoverText: #ffd4da;
+    --projectBg: var(--darkBlue);
+    --filter: invert(93%) sepia(100%) saturate(28%) hue-rotate(223deg) brightness(105%) contrast(103%);
+}
+
+.light-theme {
+    --headerBg: hsl(0, 50%, 60%);
+    --headerText: white;
+    --headerBorder: black;
+    --sidebarBg: hsl(240, 12%, 76%);
+    --importantButtonHover: #8a0000;
+    --importantText: #0e0c0c;
+    --importantTextHover: black;
+    --folderHover: black;
+    --todoText: black;
+    --todoBorder: #535353cb;
+    --bgColor: hsl(240, 9%, 86%);
+    --footerText: white;
+    --projectText: hsl(240, 66%, 9%);
+    --projectHoverText: hsl(0, 0%, 0%);
+    --projectBg: hsl(240, 12%, 76%);
+    --filter: none;
+}
+
 .header {
     display: flex;
-    background-color: hsl(240, 41%, 7%);
-    color: #CECFED;
+    background-color: var(--headerBg);
+    color: var(--headerText);
     padding: 10px;
     font-size: 20px;
-    border-bottom: 1px solid #FFFFFF;
+    border-bottom: 1px solid var(--headerBorder);
     height: 8%;
 }
 
@@ -38,14 +88,6 @@ body {
     margin-left: 25%;
 }
 
-.header-center {
-    display: flex;
-    align-items: center;
-    width: 200px;
-    gap: 15px;
-    color: #A2A3BF;
-}
-
 .header-right {
     display: flex;
     align-items: center;
@@ -58,8 +100,9 @@ body {
     position: relative;
     display: inline-block;
     width: 60px;
-    height: 34px;
+    height: 32px;
     font-size: 22px;
+    margin-bottom: -1px;
 }
 
 .switch input {
@@ -126,7 +169,7 @@ input:checked + .slider:before {
     display: flex;
     flex-direction: column;
     border-right: 1px solid #706b6b;
-    background-color: hsl(240, 41%, 7%);
+    background-color: var(--sidebarBg);
     margin-top: 1px;
 }
 .main-center {
@@ -143,15 +186,15 @@ input:checked + .slider:before {
     min-height: 40px;
     font-size: 20px;
     font-weight: 700;
-    color: #f1f1ff;
+    color: var(--projectText);
     padding: 5px;
-    background-color: hsl(240, 41%, 7%);
+    background-color: var(--projectBg);
     padding-left: 25px;
 }
 
 .projects-button:hover, 
 .important-button:hover {
-    color: #ffd4da;
+    color: var(--importantButtonHover);
     cursor: pointer;
 }
 
@@ -159,7 +202,7 @@ input:checked + .slider:before {
 .important-container {
     border-bottom: 1px solid #e4e5ff;
     overflow: auto;
-    background-color: hsl(240, 41%, 7%);
+    background-color: var(--projectBg);
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -175,7 +218,7 @@ input:checked + .slider:before {
 }
 
 .important-item {
-    color: #ff6a50;
+    color: var(--importantText);
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -184,7 +227,7 @@ input:checked + .slider:before {
 }
 
 .important-item:hover {
-    color: #ff5233;
+    color: var(--importantTextHover);
     cursor: pointer;
 }
 
@@ -204,7 +247,7 @@ input:checked + .slider:before {
 }
 
 .projects-item {
-    color: #f1f1ff;
+    color: var(--projectText);
     font-size: 21px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -213,7 +256,7 @@ input:checked + .slider:before {
 }
 
 .projects-item-delete {
-    filter: invert(93%) sepia(100%) saturate(28%) hue-rotate(223deg) brightness(105%) contrast(103%); 
+    filter: var(--filter); 
     opacity: 0.6;
 }
 
@@ -223,7 +266,7 @@ input:checked + .slider:before {
 }
 
 .projects-item:hover {
-    color: #ffd4da;
+    color: var(--projectHoverText);
     cursor: pointer;
 }
 
@@ -238,7 +281,7 @@ input:checked + .slider:before {
 
 #projects-span, 
 #important-span {
-    color: #f1f1ff;
+    color: var(--projectText);
     font-size: 15px;
 }
 
@@ -247,7 +290,7 @@ input:checked + .slider:before {
 }
 
 .todo-top-container {
-    color: #e5e6e7;
+    color: var(--todoText);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -263,8 +306,8 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 5px 0;
-    opacity: 0.4;
+    padding: 5px 8px;
+    opacity: 0.5;
 }
 
 .todo-add-container:hover, 
@@ -274,24 +317,24 @@ input:checked + .slider:before {
 }
 
 .todo-add-container > p {
-    color: white;
-    font-size: 24px;
+    color: var(--todoText);
+    font-size: 22px;
 }
 
 .add-image, .task-button {
     width: 22px;
     height: 22px;
-    filter: invert(93%) sepia(100%) saturate(28%) hue-rotate(223deg) brightness(105%) contrast(103%);
+    filter: var(--filter);
 }
 
 .todo-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #e5e6e7;
+    color: var(--todoText);
     font-size: 22px;
-    border-top: 1px solid #c5c6c72f;
-    border-bottom: 1px solid #c5c6c72f;
+    border-top: 1px solid var(--todoBorder);
+    border-bottom: 1px solid var(--todoBorder);
     padding: 4px 8px;
     margin-top: -1px;
 }
@@ -303,7 +346,7 @@ input:checked + .slider:before {
 }
 
 .delete-todo-button {
-    filter: invert(93%) sepia(100%) saturate(28%) hue-rotate(223deg) brightness(105%) contrast(103%);
+    filter: var(--filter);
     opacity: 0.6;
     width: 30px;
     height: 30px;
@@ -324,7 +367,7 @@ input:checked + .slider:before {
 }
 
 .todo-item:hover {
-    color: white;
+    color: var(--todoText);
     cursor: pointer;
     border-top-color: #c5c6c7b0;
     border-bottom-color: #c5c6c7b0;
@@ -347,11 +390,11 @@ input:checked + .slider:before {
 
 .new-todo-form {
     border-color: #00070a;
-    background-color: #2B2D44;
+    background-color: var(--bgColor);
 }
 
 .textarea {
-    background-color: #2B2D44;
+    background-color: var(--bgColor);
     border: none;
     resize: none;
     outline: none;
@@ -371,7 +414,7 @@ input:checked + .slider:before {
     display: flex;
     gap: 5px;
     align-items: center;
-    color: white;
+    color: var(--projectText);
     font-size: 16px;
     opacity: 0.6;
     margin: 10px 0 5px;
@@ -408,18 +451,29 @@ input:checked + .slider:before {
 }
 
 .red-text::placeholder {
-    color: #ec4141;
+    color: var(--brightRed);
+}
+
+.project-selector {
+    color: var(--todoText);
+    background-color: var(--bgColor);
+    padding: 2px;
+    margin-bottom: -2px;
+}
+
+.slider-container {
+    margin-bottom: 8px;
 }
 
 .due-date-picker {
     width: 150px;
-    background-color: #131920;
-    color: white;
+    background-color: var(--bgColor);
+    color: var(--todoText);
     margin-top: 5px;
 }
 
 .due-date-picker::-webkit-calendar-picker-indicator {
-    filter: invert(93%) sepia(100%) saturate(28%) hue-rotate(223deg) brightness(105%) contrast(103%);
+    filter: var(--filter);
 }
 
 .date-container {
@@ -430,7 +484,7 @@ input:checked + .slider:before {
 }
 
 .prio-text {
-    color: #C5C6C7;
+    color: var(--todoText);
     font-size: 18px;
     text-align: center;
 }
@@ -438,7 +492,7 @@ input:checked + .slider:before {
 .footer-container {
     display: flex;
     align-items: center;
-    color: #f1f1ffd2;
+    color: var(--footerText);
     background-color: hsla(240, 17%, 16%, 0.719);
     border-top: 1px solid #706b6b;
     height: 70px;
@@ -459,7 +513,7 @@ input:checked + .slider:before {
 }
 
 .github-image {
-    filter: invert(93%) sepia(100%) saturate(28%) hue-rotate(223deg) brightness(105%) contrast(103%);
+    filter: var(--filter);
     opacity: 0.6;
 }
 

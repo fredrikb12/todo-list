@@ -81,6 +81,19 @@ function addDeleteTodoEvent(deleteButton) {
     })
 }
 
+function addLightSwitchEvent(switchInput) {
+    switchInput.addEventListener("change", () => {
+        document.body.classList.toggle("light-theme");
+        if (typeof Storage !== undefined) {
+            if (JSON.parse(localStorage.prefersDarkMode) === true) {
+                localStorage.prefersDarkMode = JSON.stringify(false);
+            } else {
+                localStorage.prefersDarkMode = JSON.stringify(true);
+            }
+        }
+    });
+}
+
 function addNewProjectButtonEvent(button) {
     button.addEventListener("click", (e) => {
         newProjectClick(e);
@@ -144,8 +157,8 @@ function reAppendNewTaskButton() {
 
 function addTodoEvent(todo) {
     todo.addEventListener("click", (e) => {
-        if(e.target.classList.contains("delete-todo-button")) return;
-        if([...document.querySelectorAll(".delete-todo-button")].includes(e.target)) return;
+        if (e.target.classList.contains("delete-todo-button")) return;
+        if ([...document.querySelectorAll(".delete-todo-button")].includes(e.target)) return;
         displayTodoDetails(e.currentTarget.id);
     });
 }
@@ -172,5 +185,5 @@ function findButtons(buttonIDs) {
 export {
     bindClickEvents, addConfirmButtonEvent, addCloseButtonEvent,
     addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent,
-    addCloseNewProjectButtonEvent, addConfirmNewProjectButtonEvent, addNewProjectButtonEvent, addDeleteTodoEvent,
+    addCloseNewProjectButtonEvent, addConfirmNewProjectButtonEvent, addNewProjectButtonEvent, addDeleteTodoEvent, addLightSwitchEvent,
 };

@@ -16,6 +16,7 @@ function addProject(title) {
         items: [],
     });
     projects[projects.length - 1].index = projects.length - 1;
+    updateLocalProjects();
     renderProjects();
 }
 
@@ -37,6 +38,7 @@ function addItemToProject(todoID, projectIndex) {
     if (projectIndex > 0) {
         projects[0].items.push(todoID);
     }
+    updateLocalProjects();
 }
 
 function deleteItemFromProject(todoID) {
@@ -49,6 +51,7 @@ function deleteItemFromProject(todoID) {
         }
     });
     createTodos(getTodosByID(getIDsOfProject(getProjectIndexByTitle(projectTitle))));
+    updateLocalProjects();
 }
 
 function deleteProject(projectIndex) {
@@ -61,7 +64,7 @@ function deleteProject(projectIndex) {
         console.log(getTodos()[index].getProject());
     });
     getProjects().splice(projectIndex, 1, null);
-
+    updateLocalProjects();
 }
 
 function getIDsOfProject(projectIndex) {
@@ -107,7 +110,6 @@ function renderProjects() {
 
         const projectIndex = newProjectElement.dataset.projectIndex;
         if (projectIndex > 0) {
-            console.log(projectIndex);
             const newDeleteButton = createHTMLElement("img", "projects-item-delete");
             newDeleteButton.src = deleteIcon;
             newDeleteButton.addEventListener("click", (e) => {
@@ -120,6 +122,20 @@ function renderProjects() {
 
 
     });
+}
+
+function getLocalProjects() {
+    JSON.parse(localStorage.projects).forEach(project => {
+        projects.push(project);
+    })
+    //projects = JSON.parse(localStorage.projects);
+    console.log("Getting Local projects: ");
+    console.log(projects);
+    renderProjects();
+}
+
+function updateLocalProjects() {
+    localStorage.projects = JSON.stringify(projects);
 }
 
 function handleProjectDeletion(e, projectIndex) {
@@ -135,5 +151,5 @@ function editProjectName(string, projectIndex) {
 
 export {
     addProject, addHomeProject, addItemToProject, deleteItemFromProject, editProjectName,
-    getIDsOfProject, getProjects, getProjectIndexByTitle, renderProjects
+    getIDsOfProject, getProjects, getLocalProjects, getProjectIndexByTitle, renderProjects
 };
