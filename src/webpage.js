@@ -102,7 +102,6 @@ function createInitialWebpage() {
     const footer = createFooter();
     appendChildHelper(contentDiv, [header, main, footer]);
     if (typeof Storage !== "undefined" && localStorage.length > 0) {
-        console.log("getting local projects");
         getLocalProjects();
         getLocalTodos();
         if(localStorage.prefersDarkMode == "false") {
@@ -110,11 +109,9 @@ function createInitialWebpage() {
             document.getElementById("dark-mode-checkbox").checked = false;
         }
     } else if (typeof Storage !== "undefined" && localStorage.length == 0) {
-        console.log("No stored projects, adding home project");
         addHomeProject();
         localStorage.prefersDarkMode = true;
     } else {
-        console.log("No local storage available");
         addHomeProject();
     }
     createTodos(getTodos());

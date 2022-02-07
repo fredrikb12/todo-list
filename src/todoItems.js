@@ -29,7 +29,6 @@ function addTodo(title, description, dueDate, priority, project) {
 
     createTodos(getTodos());
     renderImportantTodos();
-    console.log(todo);
     updateLocalTodos();
     return todo.id;
 }
@@ -141,8 +140,6 @@ function renderImportantTodos() {
 }
 
 function getLocalTodos() {
-    console.log("Getting local todos: ");
-    console.log(JSON.parse(localStorage.todos));
     JSON.parse(localStorage.todos).forEach(todo => {
         if(todo == null) return;
         addTodo(todo.title, todo.description, todo.dueDate, todo.priority, todo.project);
@@ -151,9 +148,7 @@ function getLocalTodos() {
 }
 
 function updateLocalTodos() {
-    console.log("Updating local todos: ");
     localStorage.todos = JSON.stringify(getTodos());
-    console.log(JSON.parse(localStorage.todos));
 }
 
 export { addTodo, getTodos, createTodos, deleteTodo, editTodo, displayTodoDetails, getTodosByID, getLocalTodos, renderAllTodos };

@@ -55,13 +55,9 @@ function deleteItemFromProject(todoID) {
 }
 
 function deleteProject(projectIndex) {
-    console.log(`Deleting project with index ${projectIndex}`);
     const projectToDelete = getProjects()[projectIndex];
     getProjects()[projectIndex].items.forEach(index => {
-        console.log(`Assigning todo with index ${index} to home project`);
-        console.log(getTodos()[index]);
         getTodos()[index].setProject("Home");
-        console.log(getTodos()[index].getProject());
     });
     getProjects().splice(projectIndex, 1, null);
     updateLocalProjects();
@@ -127,10 +123,7 @@ function renderProjects() {
 function getLocalProjects() {
     JSON.parse(localStorage.projects).forEach(project => {
         projects.push(project);
-    })
-    //projects = JSON.parse(localStorage.projects);
-    console.log("Getting Local projects: ");
-    console.log(projects);
+    });
     renderProjects();
 }
 

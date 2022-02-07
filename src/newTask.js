@@ -64,7 +64,6 @@ function createDateContainer(isNewTask, todoID) {
         if(project == null || project == undefined) return;
         const newOption = createHTMLElement("option", "project-option");
         newOption.value = project.title;
-        console.log(newOption.value);
         if (newOption.value === document.getElementById("todo-page-title").textContent && isNewTask) {
             newOption.setAttribute("selected", "\"selected\"");
         } else if (!isNewTask) {
