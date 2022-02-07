@@ -1,8 +1,8 @@
-import ToDoFactory from "./todoFactory";
 import { appendChildHelper, createHTMLElement, removeAllChildren } from "./domHelpers";
 import { addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent, addDeleteTodoEvent } from "./bindClickEvents";
 import { createSlider, createCloseButton, createConfirmButton, createDateContainer, createTitleArea, createDescriptionArea } from "./newTask";
 import { deleteItemFromProject, getProjectIndexByTitle, getProjects } from "./projects";
+import { todoItem } from "./todoItem";
 import deleteIcon from "./images/delete.svg";
 
 const allTodos = [];
@@ -23,7 +23,7 @@ function getTodosByID(indexes) {
 }
 
 function addTodo(title, description, dueDate, priority, project) {
-    const todo = ToDoFactory(title, description, dueDate, priority, project);
+    const todo = new todoItem(title, description, dueDate, priority, project);
     todo.id = allTodos.length;
     allTodos.push(todo);
 
@@ -59,7 +59,7 @@ function createTodos(todos) {
 }
 
 function editTodo(todoID, title, description, dueDate, priority, project) {
-    const newTodo = ToDoFactory(title, description, dueDate, priority, project);
+    const newTodo = new todoItem(title, description, dueDate, priority, project);
     newTodo.id = todoID;
     allTodos.splice(todoID, 1, newTodo);
     renderAllTodos();

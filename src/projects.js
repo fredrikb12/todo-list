@@ -1,5 +1,5 @@
 import { appendChildHelper, createHTMLElement, removeAllChildren } from "./domHelpers";
-import { createTodos, getTodosByID } from "./todoItems";
+import { createTodos, getTodos, getTodosByID } from "./todoItems";
 import deleteIcon from "./images/delete.svg";
 
 const projects = [];
@@ -8,6 +8,7 @@ const currentProject = 0;
 function addProject(title) {
     title = title.slice(0, 1).toUpperCase() + title.slice(1, title.length).toLowerCase();
     for (let i = 0; i < projects.length; i++) {
+        if(projects[i] == null) continue;
         if (projects[i].title === title) return;
     }
     projects.push({
@@ -24,7 +25,7 @@ function addHomeProject() {
 
 function addItemToProject(todoID, projectIndex) {
     projects.forEach(project => {
-        if(project == null || project == undefined) return;
+        if (project == null || project == undefined) return;
         const foundIndex = project.items.findIndex(id => {
             return id == todoID;
         })
@@ -41,7 +42,7 @@ function addItemToProject(todoID, projectIndex) {
 function deleteItemFromProject(todoID) {
     let projectTitle;
     getProjects().forEach(project => {
-        if(project == null || project == undefined) return;
+        if (project == null || project == undefined) return;
         if (project.items.includes(+todoID)) {
             project.items.splice(todoID, 1, "");
             projectTitle = project.title;
@@ -53,6 +54,12 @@ function deleteItemFromProject(todoID) {
 function deleteProject(projectIndex) {
     console.log(`Deleting project with index ${projectIndex}`);
     const projectToDelete = getProjects()[projectIndex];
+    getProjects()[projectIndex].items.forEach(index => {
+        console.log(`Assigning todo with index ${index} to home project`);
+        console.log(getTodos()[index]);
+        getTodos()[index].setProject("Home");
+        console.log(getTodos()[index].getProject());
+    });
     getProjects().splice(projectIndex, 1, null);
 
 }
@@ -73,6 +80,7 @@ function setProjectToHome(project) {
 
 function getProjectIndexByTitle(title) {
     for (let i = 0; i < projects.length; i++) {
+        if (projects[i] == null) continue;
         if (projects[i].title === title) {
             return i;
         }
@@ -84,6 +92,7 @@ function renderProjects() {
     const container = document.getElementById("projects");
     removeAllChildren(container);
     projects.forEach(project => {
+        if(project == null) return;
         const newProjectContainer = createHTMLElement("div", "projects-item-container");
         const newProjectElement = createHTMLElement("p", "projects-item");
         newProjectElement.textContent = project.title;
@@ -109,13 +118,13 @@ function renderProjects() {
             appendChildHelper(container, appendChildHelper(newProjectContainer, [newProjectElement]));
         }
 
-        
+
     });
 }
 
 function handleProjectDeletion(e, projectIndex) {
-        e.target.parentNode.remove();
-        deleteProject(projectIndex);
+    e.target.parentNode.remove();
+    deleteProject(projectIndex);
 }
 
 function editProjectName(string, projectIndex) {
