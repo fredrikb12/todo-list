@@ -387,7 +387,7 @@ input:checked + .slider:before {
 }
 
 .new-project-form {
-    border: 1px solid #C5C6C7;
+    border: 1px solid var(--headerBorder);
 }
 
 .new-todo-form {
@@ -429,7 +429,7 @@ input:checked + .slider:before {
 }
 
 .new-project-form .textarea {
-    background-color: hsl(240, 41%, 7%);
+    background-color: var(--sidebarBg);
     font-size: 16px;
     padding: 3px;
     
