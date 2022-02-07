@@ -38,6 +38,7 @@ body {
     --todoBorder: #c5c6c72f;
     --bgColor: #2b2d44;
     --footerText: #f1f1ffd2;
+    --footerBg: hsla(240, 17%, 16%, 0.719);
     --projectText: var(--mildBlueWhite);
     --projectHoverText: #ffd4da;
     --projectBg: var(--darkBlue);
@@ -49,14 +50,15 @@ body {
     --headerText: white;
     --headerBorder: black;
     --sidebarBg: hsl(240, 12%, 76%);
-    --importantButtonHover: #8a0000;
+    --importantButtonHover: #000000;
     --importantText: #0e0c0c;
     --importantTextHover: black;
     --folderHover: black;
     --todoText: black;
     --todoBorder: #535353cb;
     --bgColor: hsl(240, 9%, 86%);
-    --footerText: white;
+    --footerText: hsl(240, 9%, 13%);
+    --footerBg: hsl(0, 0%, 79%);
     --projectText: hsl(240, 66%, 9%);
     --projectHoverText: hsl(0, 0%, 0%);
     --projectBg: hsl(240, 12%, 76%);
@@ -398,7 +400,7 @@ input:checked + .slider:before {
     border: none;
     resize: none;
     outline: none;
-    color: white;
+    color: var(--todoText);
     font-size: 18px;
 }
 
@@ -493,7 +495,7 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     color: var(--footerText);
-    background-color: hsla(240, 17%, 16%, 0.719);
+    background-color: var(--footerBg);
     border-top: 1px solid #706b6b;
     height: 70px;
 }
