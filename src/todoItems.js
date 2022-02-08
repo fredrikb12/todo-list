@@ -140,6 +140,9 @@ function renderImportantTodos() {
 }
 
 function getLocalTodos() {
+    if(typeof Storage == undefined) return;
+    if(localStorage.todos == undefined) return;
+    console.log(JSON.parse(localStorage.todos));
     JSON.parse(localStorage.todos).forEach(todo => {
         if(todo == null) return;
         addTodo(todo.title, todo.description, todo.dueDate, todo.priority, todo.project);
@@ -148,6 +151,7 @@ function getLocalTodos() {
 }
 
 function updateLocalTodos() {
+    if(typeof Storage == undefined) return;
     localStorage.todos = JSON.stringify(getTodos());
 }
 

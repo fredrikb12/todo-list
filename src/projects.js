@@ -121,6 +121,7 @@ function renderProjects() {
 }
 
 function getLocalProjects() {
+    if(typeof Storage == undefined) return;
     JSON.parse(localStorage.projects).forEach(project => {
         projects.push(project);
     });
@@ -128,6 +129,7 @@ function getLocalProjects() {
 }
 
 function updateLocalProjects() {
+    if(typeof Storage == undefined) return;
     localStorage.projects = JSON.stringify(projects);
 }
 
