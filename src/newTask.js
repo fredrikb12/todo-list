@@ -60,7 +60,6 @@ function createDateContainer(isNewTask, todoID) {
     const selector = createHTMLElement("select", "project-selector");
     selector.name = "projects";
     getProjects().forEach((project) => {
-        console.dir(project);
         if(project == null || project == undefined) return;
         const newOption = createHTMLElement("option", "project-option");
         newOption.value = project.title;

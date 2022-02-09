@@ -8,9 +8,6 @@ import deleteIcon from "./images/delete.svg";
 const allTodos = [];
 
 function getTodos() {
-    if (allTodos.length < 1) {
-        //addTodo("test", "stupid stuff", "16/3/1998", "high");
-    }
     return allTodos;
 }
 

@@ -14,10 +14,6 @@ function bindClickEvents() {
     addImportantButtonEvent(importantButton);
     addAddTaskButtonEvent(addTaskButton);
     addNewProjectButtonEvent(addProjectButton);
-
-    darkModeCheckbox.addEventListener("click", () => {
-        //change color scheme somehow
-    });
 }
 
 function addAddTaskButtonEvent(addTaskButton) {
@@ -73,7 +69,6 @@ function addConfirmButtonEvent(confirmButton) {
 
 function addDeleteTodoEvent(deleteButton) {
     deleteButton.addEventListener("click", (e) => {
-        //e.stopPropagation();
         const parent = deleteButton.parentNode.parentNode;
         const todoID = parent.getAttribute("id");
         deleteTodo(todoID);
