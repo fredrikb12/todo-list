@@ -3,7 +3,6 @@ import { appendChildHelper, createHTMLElement } from "./domHelpers";
 import { getTodos, createTodos, getLocalTodos } from "./todoItems";
 import { createNewTaskButton } from "./newTask";
 import { addHomeProject, getLocalProjects } from "./projects";
-import { createNewAddButton } from "./addButton";
 import { createNewProjectButton } from "./newProject";
 import githubIcon from "./images/github.svg";
 

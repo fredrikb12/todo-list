@@ -1,7 +1,6 @@
 import { addCloseNewProjectButtonEvent, addConfirmNewProjectButtonEvent, addNewProjectButtonEvent } from "./bindClickEvents";
 import { appendChildHelper, createHTMLElement } from "./domHelpers";
 import { createConfirmButton, createCloseButton } from "./newTask";
-import addIcon from "./images/add.svg";
 import { createNewAddButton } from "./addButton";
 
 function newProjectClick(e) {

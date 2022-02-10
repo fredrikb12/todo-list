@@ -3,7 +3,6 @@ import { createTodos, getTodos, getTodosByID } from "./todoItems";
 import deleteIcon from "./images/delete.svg";
 
 const projects = [];
-const currentProject = 0;
 
 function addProject(title) {
     title = title.slice(0, 1).toUpperCase() + title.slice(1, title.length).toLowerCase();
@@ -50,7 +49,7 @@ function deleteItemFromProject(todoID) {
             projectTitle = project.title;
         }
     });
-    createTodos(getTodosByID(getIDsOfProject(getProjectIndexByTitle(projectTitle))));
+    createTodos(getTodosByID(getIDsOfProject(getProjectIndexByTitle(document.getElementById("todo-page-title")))));
     updateLocalProjects();
 }
 

@@ -17,11 +17,10 @@
 
 body {
     background-color: var(--bgColor);
-    height: 100vh;
 }
 
 #content {
-    height: 100%;
+    height: 100vh;
 }
 
 .dark-theme {
@@ -161,9 +160,8 @@ input:checked + .slider:before {
 
 .main {
     display: flex;
-    height: 86%;
-    min-height: 840px;
     overflow: auto;
+    min-height: 90vh;
 
 }
 .main-left {
@@ -212,11 +210,15 @@ input:checked + .slider:before {
     padding: 0 0 15px;
 }
 
+#projects, #important-folder {
+    max-height: 45vh;
+    overflow-y: auto;
+}
+
 .important-folder {
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 
 .important-item {
@@ -327,6 +329,11 @@ input:checked + .slider:before {
     width: 22px;
     height: 22px;
     filter: var(--filter);
+}
+
+.todos {
+    max-height: 600px;
+    overflow: auto;
 }
 
 .todo-item {

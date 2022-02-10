@@ -1,12 +1,11 @@
 import { appendChildHelper } from "./domHelpers";
 import { newProjectClick, reAppendNewProjectButton } from "./newProject";
 import { createNewTaskButton, newTaskClick } from "./newTask";
-import { addItemToProject, addProject, getProjectIndexByTitle } from "./projects";
-import { addTodo, createTodos, deleteTodo, displayTodoDetails, editTodo, getTodos, renderAllTodos } from "./todoItems";
+import { addItemToProject, addProject, getProjectIndexByTitle, getIDsOfProject } from "./projects";
+import { addTodo, createTodos, deleteTodo, displayTodoDetails, editTodo, getTodos, getTodosByID, renderAllTodos } from "./todoItems";
 
 function bindClickEvents() {
     const [projectsButton, importantButton] = findButtons(["projects-button", "important-button"]);
-    const darkModeCheckbox = document.getElementById("dark-mode-checkbox");
     const addTaskButton = document.getElementById("todo-add-container");
     const addProjectButton = document.querySelector(".new-project-button");
 
@@ -63,6 +62,7 @@ function addConfirmButtonEvent(confirmButton) {
         const todoID = addTodo(title.value, description, date, priority, project);
         addItemToProject(todoID, getProjectIndexByTitle(project));
         parent.remove();
+        createTodos(getTodosByID(getIDsOfProject(getProjectIndexByTitle(document.getElementById("todo-page-title").textContent))));
         reAppendNewTaskButton();
     });
 }

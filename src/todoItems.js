@@ -1,7 +1,7 @@
 import { appendChildHelper, createHTMLElement, removeAllChildren } from "./domHelpers";
 import { addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent, addDeleteTodoEvent } from "./bindClickEvents";
-import { createSlider, createCloseButton, createConfirmButton, createDateContainer, createTitleArea, createDescriptionArea } from "./newTask";
-import { deleteItemFromProject, getProjectIndexByTitle, getProjects } from "./projects";
+import { createCloseButton, createConfirmButton, createDateContainer, createTitleArea, createDescriptionArea } from "./newTask";
+import { deleteItemFromProject, getProjects } from "./projects";
 import { todoItem } from "./todoItem";
 import deleteIcon from "./images/delete.svg";
 
@@ -23,8 +23,6 @@ function addTodo(title, description, dueDate, priority, project) {
     const todo = new todoItem(title, description, dueDate, priority, project);
     todo.id = allTodos.length;
     allTodos.push(todo);
-
-    createTodos(getTodos());
     renderImportantTodos();
     updateLocalTodos();
     return todo.id;
@@ -139,7 +137,6 @@ function renderImportantTodos() {
 function getLocalTodos() {
     if(typeof Storage == undefined) return;
     if(localStorage.todos == undefined) return;
-    console.log(JSON.parse(localStorage.todos));
     JSON.parse(localStorage.todos).forEach(todo => {
         if(todo == null) return;
         addTodo(todo.title, todo.description, todo.dueDate, todo.priority, todo.project);
