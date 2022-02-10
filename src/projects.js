@@ -55,8 +55,10 @@ function deleteItemFromProject(todoID) {
 
 function deleteProject(projectIndex) {
     const projectToDelete = getProjects()[projectIndex];
+    const todos = getTodos();
     getProjects()[projectIndex].items.forEach(index => {
-        getTodos()[index].setProject("Home");
+        if(todos[index] == null) return;
+        todos[index].setProject("Home");
     });
     getProjects().splice(projectIndex, 1, null);
     updateLocalProjects();
