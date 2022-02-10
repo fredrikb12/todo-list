@@ -1,7 +1,7 @@
 import { appendChildHelper, createHTMLElement, removeAllChildren } from "./domHelpers";
 import { addTodoEvent, addDetailedCloseButtonEvent, addDetailedConfirmButtonEvent, addDeleteTodoEvent } from "./bindClickEvents";
 import { createCloseButton, createConfirmButton, createDateContainer, createTitleArea, createDescriptionArea } from "./newTask";
-import { deleteItemFromProject, getProjects } from "./projects";
+import { deleteItemFromProject, getIDsOfProject, getProjectIndexByTitle, getProjects } from "./projects";
 import { todoItem } from "./todoItem";
 import deleteIcon from "./images/delete.svg";
 
@@ -95,6 +95,7 @@ function displayTodoDetails(todoID) {
 function deleteTodo(todoID) {
     allTodos[todoID] = null;
     deleteItemFromProject(todoID);
+    createTodos(getTodosByID(getIDsOfProject(getProjectIndexByTitle(document.getElementById("todo-page-title").textContent))));
     renderImportantTodos();
     updateLocalTodos();
 }
